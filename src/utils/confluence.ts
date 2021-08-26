@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 
-type ConfluencePage = {
+export type ConfluencePage = {
   id: string
   version: number
   title: string
@@ -23,21 +23,14 @@ type ConfluenceSearchResponse = {
 }
 
 class Confluence {
-  private endpoint
-  private autodocKey
+  private endpoint: string
+  private autodocKey: string
+  private apiKey: string
 
-  constructor(endpoint: string, autodocKey: string) {
+  constructor(endpoint: string, autodocKey: string, apiKey: string) {
     this.endpoint = endpoint
     this.autodocKey = autodocKey
-  }
-
-  private getApiKey(): string {
-    const key = process.env.CONFLUENCE_API_KEY
-    if (!key)
-      throw Error(
-        'Error authorizing Confluence, no API key found. Is env variable CONFLUENCE_API_KEY set?'
-      )
-    return key
+    this.apiKey = apiKey
   }
 
   private parseSearchResponse(
@@ -56,7 +49,7 @@ class Confluence {
       `${this.endpoint}/wiki/rest/api/content/search?expand=body.view,version.number&cql=(space.key=ED) AND (text~\"${this.autodocKey}\")`,
       {
         headers: {
-          Authorization: `Basic ${this.getApiKey()}`
+          Authorization: `Basic ${this.apiKey}`
         }
       }
     ).then(res => res.json())
@@ -81,7 +74,7 @@ class Confluence {
         body: JSON.stringify(body),
         headers: {
           Accept: 'application/json',
-          Authorization: `Basic ${this.getApiKey()}`,
+          Authorization: `Basic ${this.apiKey}`,
           'Content-Type': 'application/json'
         },
         method: 'PUT'
@@ -90,6 +83,8 @@ class Confluence {
     return response.status === 200
   }
 }
+
+export default Confluence
 
 // EXAMPLE USAGE
 // const c = new Confluence("https://autodocument.atlassian.net", "-autodoc-");
