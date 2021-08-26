@@ -6,11 +6,8 @@ export const AUTODOC_IDENTIFIER = '-autodoc-'
 
 const run = async (): Promise<void> => {
   try {
-    //const commit: string = core.getInput('commit')
-    //const confluenceApiKey: string = core.getInput('token')
-    const commit = 'hi'
-    const confluenceApiKey =
-      'a2t3YW5nMjJAc3RhbmZvcmQuZWR1OlVPZmY5ekxtVXZYNjJoTTJhVXBnMkM3Mg=='
+    const commit: string = core.getInput('commit')
+    const confluenceApiKey: string = core.getInput('token')
     const c = new Confluence(
       'https://autodocument.atlassian.net',
       AUTODOC_IDENTIFIER,
