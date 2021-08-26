@@ -32,6 +32,7 @@ const updateMilestonesOnConfluence = async (
   const milestonePages = confluencePages.filter(page =>
     confluencePageContainsMilestone(page)
   )
+  console.log(milestonePages)
 }
 
 export default updateMilestonesOnConfluence
