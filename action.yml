@@ -2,10 +2,15 @@ name: 'Your name here'
 description: 'Provide a description here'
 author: 'Your name or organization here'
 inputs:
-  milliseconds: # change this
+  commit: # change this
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Commit message'
+  changes:
+    required: true
+    description: 'For now, also the commit message'
+  token:
+    required: true
+    description: 'Confluence API token'
 runs:
   using: 'node12'
   main: 'dist/index.js'
